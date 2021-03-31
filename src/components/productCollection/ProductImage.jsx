@@ -1,9 +1,10 @@
 import React from 'react'
 import { Image, Typography } from "antd";
+import { withRouter } from "react-router-dom";
 
-export const ProductImage = ({id, size, imageSrc, price, title}) => {
+const ProductImageComponent = ({id, size, imageSrc, price, title, history, location, match}) => {
     return (
-        <>
+        <div onClick={() => history.push(`detail/${id}`)}>
         {size === "large" ? (
           <Image src={imageSrc} height={285} width={490} />
         ) : (
@@ -17,6 +18,8 @@ export const ProductImage = ({id, size, imageSrc, price, title}) => {
             ¥ {price} 起
           </Typography.Text>
         </div>
-      </>
+      </div>
     )
 }
+
+export const ProductImage = withRouter(ProductImageComponent);
