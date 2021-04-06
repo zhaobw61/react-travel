@@ -6,29 +6,30 @@ import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
 import styles from './HomePage.module.css';
 import { withTranslation } from 'react-i18next';
-import axios from "axios";
-const url = 'https://www.fastmock.site/mock/e963930ddeaaf6c6c496ba531f4a2148'
+import { connect } from "react-redux";
+import { giveMeDataActionCreator } from "../../redux/recommendProducts/recommendProductsActions";
 
-class HomePageComponent extends React.Component {
-    constructor  (props) {
-        super(props);
-        this.state = {
-            loading: true,
-            error: null,
-            productList: []
-        }
+const mapStateToProps = (state) => {
+    return {
+        loading: state.recommendProducts.loading,
+        error: state.recommendProducts.error,
+        productList: state.recommendProducts.productList
     }
-    async componentDidMount() {
-        const { data } = await axios.get(`${url}/api/productCollections`);
-        this.setState({
-            loading: false,
-            error: null,
-            productList: data
-        });
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        giveMeData: () => {
+            dispatch(giveMeDataActionCreator());
+        }
+    };
+};
+class HomePageComponent extends React.Component {
+    componentDidMount() {
+        this.props.giveMeData();
     }
     render() {
-        const { t } = this.props;
-        const { productList, loading, error } = this.state;
+        const { t, productList, loading, error } = this.props;
         if (loading) {
             return (
                 <Spin
@@ -90,4 +91,7 @@ class HomePageComponent extends React.Component {
     }
 }
 
-export const  HomePage = withTranslation()(HomePageComponent);
+export const HomePage = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withTranslation()(HomePageComponent));
