@@ -4,6 +4,7 @@ import {Row, Col, Divider} from 'antd';
 import { ProductImage } from './ProductImage'
 
 export const ProductCollection = ({title, sideImage, products}) => {
+    console.log('products', products);
     return(
       <div className={styles.content}>
         <Divider orientation='left'>{title}</Divider>

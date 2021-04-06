@@ -37,7 +37,7 @@ export const giveMeDataActionCreator = () => async (dispatch, getState) => {
         const {
             data
         } = await axios.get(
-            "https://www.fastmock.site/mock/e963930ddeaaf6c6c496ba531f4a2148/api/productCollections"
+            "http://123.56.149.216:8080/api/productCollections"
         );
         dispatch(fetchRecommendProductSuccessActionCreator(data));
     } catch (error) {
